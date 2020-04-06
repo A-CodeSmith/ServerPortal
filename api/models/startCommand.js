@@ -6,22 +6,19 @@ class StartCommand {
         this.game = game;
     }
 
-    execute() {
+    async executeAsync() {
         console.log(`Executing start command for ${this.game.displayName}`);
-
-        try {
-            spawn(this.game.startCommand, {
+        
+        spawn(
+            this.game.startCommand,
+            {
                 detached: true,
                 stdio: 'ignore',
                 shell: true,
                 windowsHide: false
-            });   
-        } catch (err) {
-            console.log(err);
-            return({result: 'fail', error: err});
-        }
-
-        return({result: 'success'});
+            }
+        );   
+        return true;
     }
 }
 

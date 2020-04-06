@@ -1,6 +1,6 @@
 const Process = require('./process');
 
-class IsRunningCommand {
+class StopCommand {
 
     constructor(game) {
         this.game = game;
@@ -11,13 +11,13 @@ class IsRunningCommand {
     }
 
     async executeAsync() {
-        console.log(`Executing isRunning command for ${this.game.displayName}`);
+        console.log(`Executing stop command for ${this.game.displayName}`);
 
         const path = this.escapeRegExp(this.game.exePath);
         const args = this.escapeRegExp(this.game.exeArgs);
 
-        return await Process.findAsync(path, args);
+        return await Process.stopAsync(path, args);
     }
 }
 
-module.exports = IsRunningCommand;
+module.exports = StopCommand;

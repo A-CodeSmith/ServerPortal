@@ -1,6 +1,7 @@
 const BackupCommand = require('./backupCommand');
 const IsRunningCommand = require('./isRunningCommand');
 const StartCommand = require('./startCommand');
+const StopCommand = require('./stopCommand');
 
 class CommandFactory {
 
@@ -12,6 +13,8 @@ class CommandFactory {
                 return new IsRunningCommand(game);
             case 'start':
                 return new StartCommand(game);
+            case 'stop':
+                return new StopCommand(game);
             default:
                 console.error(`Unsupported command \'${commandName}\'`);
                 return null;

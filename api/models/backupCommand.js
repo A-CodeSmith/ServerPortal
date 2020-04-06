@@ -26,6 +26,10 @@ class BackupCommand {
             attempts++;
         }
 
+        if (attempts == maxAttempts) {
+            throw new Error('Unable to resolve backup filename.');
+        }
+
         return path;
     }
 
@@ -33,26 +37,21 @@ class BackupCommand {
         return String.fromCharCode(97 + n);
     }
 
-    execute() {
+    async executeAsync() {
         console.log(`Executing backup command for ${this.game.displayName}`);
         
         const destination = this.getDestFilename();
-        try {
-            spawn(
-                zipUtility,
-                ['a', destination, '-t7z', '-r', this.game.backupSource],
-                {
-                    detached: true,
-                    stdio: 'ignore',
-                    shell: true
-                }
-            );   
-        } catch (err) {
-            console.log(err);
-            return({result: 'fail', error: err});
-        }
+        spawn(
+            this.zipUtility,
+            ['a', destination, '-t7z', '-r', this.game.backupSource],
+            {
+                detached: true,
+                stdio: 'ignore',
+                shell: true
+            }
+        );
 
-        return({result: 'success'});
+        return true;
     }
 }
 
